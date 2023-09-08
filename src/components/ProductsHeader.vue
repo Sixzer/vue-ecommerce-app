@@ -1,3 +1,13 @@
+<script setup lang="ts">
+import { ref } from "vue";
+
+const srch = ref("");
+
+const handleChange = (e: any) => {
+    console.log(e.target.value, srch.value);
+};
+</script>
+
 <template>
     <nav class="products-nav">
         <ul class="products-list">
@@ -24,7 +34,10 @@
                     type="text"
                     class="products-list__input"
                     placeholder="Search..."
+                    @change.prevent="handleChange"
+                    v-model="srch"
                 />
+
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -53,8 +66,6 @@
         </ul>
     </nav>
 </template>
-
-<script setup lang="ts"></script>
 
 <style scoped>
 .products-nav {

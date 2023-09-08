@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import { type ITovar } from "@/assets/interfaces";
-import ProductsItem from "./ProductsItem.vue";
+import ProductsItem from "@/components/UI/ProductsItem.vue";
 
 onMounted(() => fetchUsers());
 
@@ -25,7 +25,7 @@ const fetchUsers = async () => {
     <section class="products">
         <ul class="products-list">
             <ProductsItem
-                v-bind:product="product"
+                :product="product"
                 v-for="product in productsList"
                 :key="product.id"
             />
@@ -35,10 +35,11 @@ const fetchUsers = async () => {
 
 <style scoped>
 .products-list {
+    padding: 0;
     list-style: none;
-    display: flex;
-    justify-self: center;
-    align-items: flex-start;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 280px);
+    justify-content: space-between;
+    row-gap: 20px;
 }
 </style>
