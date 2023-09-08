@@ -1,12 +1,30 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import axios from "axios";
 import { type ITovar } from "@/assets/interfaces";
 import ProductsItem from "@/components/UI/ProductsItem.vue";
 
-onMounted(() => fetchUsers());
+const productsList = ref<ITovar[]>();
+const props = defineProps<{ sortMethod: string }>();
 
-const productsList = ref<ITovar[] | null>(null);
+watch(props, () => {
+    switch (props.sortMethod) {
+        case "highToLow":
+            productsList.value = productsList.value?.sort(
+                (a, b) => +b.price - +a.price
+            );
+            break;
+        case "lowToHigh":
+            productsList.value = productsList.value?.sort(
+                (a, b) => +a.price - +b.price
+            );
+            break;
+        default:
+            break;
+    }
+});
+
+onMounted(() => fetchUsers());
 
 const fetchUsers = async () => {
     try {

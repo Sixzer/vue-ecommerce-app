@@ -1,11 +1,16 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
+
+const emit = defineEmits<{
+    (e: "upd", value: string): void;
+}>();
 
 const srch = ref("");
+const slctd = ref("");
 
-const handleChange = (e: any) => {
-    console.log(e.target.value, srch.value);
-};
+watch(slctd, () => {
+    emit("upd", slctd.value);
+});
 </script>
 
 <template>
@@ -34,7 +39,6 @@ const handleChange = (e: any) => {
                     type="text"
                     class="products-list__input"
                     placeholder="Search..."
-                    @change.prevent="handleChange"
                     v-model="srch"
                 />
 
@@ -56,11 +60,12 @@ const handleChange = (e: any) => {
             <li class="products-list__item">
                 <select
                     name="sort"
-                    id=""
                     class="products-item__select"
-                    style=""
+                    v-model="slctd"
                 >
-                    <option value="Sort">Sort by...</option>
+                    <option disabled value="">Sort by...</option>
+                    <option value="highToLow">Price high to low</option>
+                    <option value="lowToHigh">Price low to high</option>
                 </select>
             </li>
         </ul>
