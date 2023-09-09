@@ -75,7 +75,7 @@ watchEffect(() => {
             />
         </ul>
         <NoResults v-else-if="findMethod" :find="findMethod" />
-        <Spinner />
+        <Spinner v-else />
     </section>
 </template>
 

@@ -7,13 +7,28 @@ import { RouterLink } from "vue-router";
         <nav class="shop-nav">
             <ul class="shop-list__left">
                 <li class="shop-list__left__item">
-                    <RouterLink to="/">Home</RouterLink>
+                    <RouterLink
+                        active-class="activeLink"
+                        class="baseLink"
+                        to="/"
+                        >Home</RouterLink
+                    >
                 </li>
                 <li class="shop-list__left__item">
-                    <RouterLink to="/products">Products</RouterLink>
+                    <RouterLink
+                        active-class="activeLink"
+                        class="baseLink"
+                        to="/products"
+                        >Products</RouterLink
+                    >
                 </li>
                 <li class="shop-list__left__item">
-                    <RouterLink class="hover" to="/about">About</RouterLink>
+                    <RouterLink
+                        active-class="activeLink"
+                        class="baseLink"
+                        to="/about"
+                        >About</RouterLink
+                    >
                 </li>
             </ul>
             <ul class="shop-list__right">
@@ -69,8 +84,16 @@ import { RouterLink } from "vue-router";
 .shop-list__right__item svg,
 .shop-list__right__item p {
     text-decoration: none;
-    color: #fff;
     transition: color 0.3s ease;
+}
+
+.baseLink {
+    color: #fff;
+}
+
+.activeLink {
+    color: gray;
+    font-weight: bold;
 }
 
 .shop-list__left__item a:hover,

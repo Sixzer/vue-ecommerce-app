@@ -24,12 +24,12 @@ const fetchUsers = async () => {
 
 <template>
     <header class="header">
-        <h1>eCommerce App</h1>
+        <h1 class="header-title">eCommerce App</h1>
     </header>
 
-    <article class="featured-products">
-        <h2>Featured products</h2>
-        <ul class="products-list" v-if="productsList">
+    <article class="featuredProducts">
+        <h2 class="featuredProducts__title">Featured products</h2>
+        <ul class="featuredProducts__list" v-if="productsList">
             <ProductsItem
                 :product="product"
                 v-for="product in productsList"
@@ -42,7 +42,7 @@ const fetchUsers = async () => {
     <article class="newsletter">
         <h2>Subscribe to newsletter</h2>
         <p>Receive push notifications of new goods and discounts.</p>
-        <form>
+        <form @submit.prevent>
             <input type="email" placeholder="Enter your email..." />
             <button type="submit">Subscribe</button>
         </form>
@@ -55,29 +55,19 @@ const fetchUsers = async () => {
     padding: 30px 0;
 }
 
-.header h1 {
+.header-title {
     font-size: 36px;
     margin: 0;
 }
 
-.main-nav ul {
-    list-style: none;
-    padding: 0;
+.featuredProducts {
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
 }
 
-.main-nav li {
-    display: inline;
-    margin-right: 20px;
-}
-
-.main-nav a {
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-}
-
-.featured-products {
-    text-align: center;
+.featuredProducts__title {
+    align-self: center;
 }
 
 .newsletter {
@@ -112,18 +102,7 @@ const fetchUsers = async () => {
     border-radius: 5px;
 }
 
-.footer {
-    text-align: center;
-    padding: 20px 0;
-    background-color: #333;
-    color: white;
-}
-
-.footer p {
-    margin: 0;
-}
-
-.products-list {
+.featuredProducts__list {
     padding: 0;
     list-style: none;
     display: grid;
