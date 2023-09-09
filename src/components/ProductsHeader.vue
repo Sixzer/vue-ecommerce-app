@@ -2,14 +2,19 @@
 import { ref, watch } from "vue";
 
 const emit = defineEmits<{
-    (e: "upd", value: string): void;
+    (e: "sort", value: string): void;
+    (e: "find", value: string): void;
 }>();
 
-const srch = ref("");
-const slctd = ref("");
+const selectedSort = ref<string>("");
+const selectedSearch = ref<string>("");
 
-watch(slctd, () => {
-    emit("upd", slctd.value);
+watch(selectedSort, () => {
+    emit("sort", selectedSort.value);
+});
+
+watch(selectedSearch, () => {
+    emit("find", selectedSearch.value);
 });
 </script>
 
@@ -39,7 +44,7 @@ watch(slctd, () => {
                     type="text"
                     class="products-list__input"
                     placeholder="Search..."
-                    v-model="srch"
+                    v-model="selectedSearch"
                 />
 
                 <svg
@@ -58,11 +63,7 @@ watch(slctd, () => {
                 </svg>
             </li>
             <li class="products-list__item">
-                <select
-                    name="sort"
-                    class="products-item__select"
-                    v-model="slctd"
-                >
+                <select class="products-item__select" v-model="selectedSort">
                     <option disabled value="">Sort by...</option>
                     <option value="highToLow">Price high to low</option>
                     <option value="lowToHigh">Price low to high</option>

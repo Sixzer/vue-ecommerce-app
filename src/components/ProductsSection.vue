@@ -1,53 +1,71 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, watchEffect } from "vue";
 import axios from "axios";
 import { type ITovar } from "@/assets/interfaces";
 import ProductsItem from "@/components/UI/ProductsItem.vue";
+import NoResults from "@/components/UI/NoResults.vue";
 
-const productsList = ref<ITovar[]>();
-const props = defineProps<{ sortMethod: string }>();
-
-watch(props, () => {
-    switch (props.sortMethod) {
-        case "highToLow":
-            productsList.value = productsList.value?.sort(
-                (a, b) => +b.price - +a.price
-            );
-            break;
-        case "lowToHigh":
-            productsList.value = productsList.value?.sort(
-                (a, b) => +a.price - +b.price
-            );
-            break;
-        default:
-            break;
-    }
-});
+const responseApi = ref<ITovar[]>([]);
+const productsList = ref<ITovar[]>([]);
+const props = defineProps<{ sortMethod: string; findMethod: string }>();
 
 onMounted(() => fetchUsers());
 
 const fetchUsers = async () => {
     try {
         const response = await axios.get(
-            "https://fakestoreapi.com/products?limit=20"
+            "https://fakestoreapi.com/products?limit=15"
         );
 
-        productsList.value = response.data;
+        responseApi.value = response.data;
     } catch (error) {
         console.log(error);
     }
 };
+
+watch(responseApi, () => {
+    productsList.value = responseApi.value;
+});
+
+watch(
+    () => props.sortMethod,
+    (method) => {
+        switch (method) {
+            case "highToLow":
+                productsList.value = productsList.value?.sort(
+                    (a, b) => b.price - a.price
+                );
+                break;
+            case "lowToHigh":
+                productsList.value = productsList.value?.sort(
+                    (a, b) => a.price - b.price
+                );
+                break;
+            default:
+                break;
+        }
+    }
+);
+
+watchEffect(() => {
+    productsList.value = [...responseApi.value].filter((product) =>
+        product.title
+            .toLowerCase()
+            .includes(props.findMethod.trim().toLowerCase())
+    );
+});
 </script>
 
 <template>
     <section class="products">
-        <ul class="products-list">
+        <ul class="products-list" v-if="productsList.length > 0">
             <ProductsItem
                 :product="product"
                 v-for="product in productsList"
                 :key="product.id"
             />
         </ul>
+        <NoResults v-else :find="findMethod" />
     </section>
 </template>
 
