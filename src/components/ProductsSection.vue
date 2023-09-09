@@ -31,16 +31,24 @@ watch(
     () => props.sortMethod,
     (method) => {
         switch (method) {
-            case "highToLow":
+            case "priceHighToLow":
                 productsList.value = productsList.value?.sort(
                     (a, b) => b.price - a.price
                 );
                 break;
-            case "lowToHigh":
+            case "priceLowToHigh":
                 productsList.value = productsList.value?.sort(
                     (a, b) => a.price - b.price
                 );
                 break;
+            case "ratingHighToLow":
+                productsList.value = productsList.value.sort(
+                    (a, b) => b.rating.rate - a.rating.rate
+                );
+            case "ratingLowToHigh":
+                productsList.value = productsList.value.sort(
+                    (a, b) => a.rating.rate - b.rating.rate
+                );
             default:
                 break;
         }

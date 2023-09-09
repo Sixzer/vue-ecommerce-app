@@ -65,8 +65,10 @@ watch(selectedSearch, () => {
             <li class="products-list__item">
                 <select class="products-item__select" v-model="selectedSort">
                     <option disabled value="">Sort by...</option>
-                    <option value="highToLow">Price high to low</option>
-                    <option value="lowToHigh">Price low to high</option>
+                    <option value="priceHighToLow">Price high to low</option>
+                    <option value="priceLowToHigh">Price low to high</option>
+                    <option value="ratingHighToLow">Rating high to low</option>
+                    <option value="ratingLowToHigh">Rating low to high</option>
                 </select>
             </li>
         </ul>
