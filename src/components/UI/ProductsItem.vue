@@ -60,6 +60,7 @@ const { product } = props;
 
 .product-card:hover {
     transform: translateY(-5px);
+    cursor: pointer;
 }
 .product-info {
     display: flex;
@@ -122,5 +123,6 @@ const { product } = props;
 .product-button:hover {
     background-color: #333;
     color: white;
+    /* cursor: pointer; */
 }
 </style>

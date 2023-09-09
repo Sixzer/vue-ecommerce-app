@@ -3,6 +3,7 @@ import { ref, onMounted } from "vue";
 import axios from "axios";
 import { type ITovar } from "@/assets/interfaces";
 import ProductsItem from "@/components/UI/ProductsItem.vue";
+import Spinner from "@/components/UI/Spinner.vue";
 
 onMounted(() => fetchUsers());
 
@@ -26,31 +27,32 @@ const fetchUsers = async () => {
         <h1>eCommerce App</h1>
     </header>
 
-    <section class="featured-products">
+    <article class="featured-products">
         <h2>Featured products</h2>
-        <ul class="products-list">
+        <ul class="products-list" v-if="productsList">
             <ProductsItem
                 :product="product"
                 v-for="product in productsList"
                 :key="product.id"
             />
         </ul>
-    </section>
+        <Spinner v-else />
+    </article>
 
-    <section class="newsletter">
+    <article class="newsletter">
         <h2>Subscribe to newsletter</h2>
         <p>Receive push notifications of new goods and discounts.</p>
         <form>
             <input type="email" placeholder="Enter your email..." />
             <button type="submit">Subscribe</button>
         </form>
-    </section>
+    </article>
 </template>
 
 <style scoped>
 .header {
     text-align: center;
-    padding: 20px 0;
+    padding: 30px 0;
 }
 
 .header h1 {
@@ -75,7 +77,6 @@ const fetchUsers = async () => {
 }
 
 .featured-products {
-    margin: 40px 0;
     text-align: center;
 }
 

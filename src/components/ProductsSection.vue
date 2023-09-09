@@ -4,6 +4,7 @@ import axios from "axios";
 import { type ITovar } from "@/assets/interfaces";
 import ProductsItem from "@/components/UI/ProductsItem.vue";
 import NoResults from "@/components/UI/NoResults.vue";
+import Spinner from "@/components/UI/Spinner.vue";
 
 const responseApi = ref<ITovar[]>([]);
 const productsList = ref<ITovar[]>([]);
@@ -73,7 +74,8 @@ watchEffect(() => {
                 :key="product.id"
             />
         </ul>
-        <NoResults v-else :find="findMethod" />
+        <NoResults v-else-if="findMethod" :find="findMethod" />
+        <Spinner />
     </section>
 </template>
 
