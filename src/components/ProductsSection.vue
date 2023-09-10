@@ -46,6 +46,7 @@ watch(
                 productsList.value = productsList.value.sort(
                     (a, b) => b.rating.rate - a.rating.rate
                 );
+                break;
             case "ratingLowToHigh":
                 productsList.value = productsList.value.sort(
                     (a, b) => a.rating.rate - b.rating.rate
