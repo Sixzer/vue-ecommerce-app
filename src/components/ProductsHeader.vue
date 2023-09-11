@@ -130,6 +130,7 @@ watch(selectedSearch, () => {
 }
 
 .products-list__input {
+    color: black;
     box-sizing: border-box;
     height: 100%;
     width: 100%;

@@ -10,8 +10,8 @@ import Spinner from "@/components/UI/Spinner.vue";
 const shopStore = useShopStore();
 const productsList = ref<ITovar[]>([]);
 
-onMounted(() => {
-    productsList.value = shopStore.data;
+watchEffect(() => {
+    productsList.value = [...shopStore.data];
 });
 
 watch(

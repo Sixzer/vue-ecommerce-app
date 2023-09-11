@@ -30,7 +30,10 @@ const props = defineProps<{ search: string }>();
 
 <style scoped>
 .noResults {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     margin: 20px;
 }
 

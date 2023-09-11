@@ -5,7 +5,7 @@ import ShopMain from "./components/ShopMain.vue";
 import { useShopStore } from "@/stores/store";
 
 const shopStore = useShopStore();
-const PRODUCTS_AMOUNT: number = 15;
+const PRODUCTS_AMOUNT: number = 30;
 
 onMounted(() => {
     shopStore.fetchDataAPI(PRODUCTS_AMOUNT);
