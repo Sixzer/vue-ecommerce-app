@@ -48,7 +48,14 @@ import { RouterLink } from "vue-router";
                         />
                     </svg>
                 </li>
-                <li class="shop-list__right__item"><p>Login</p></li>
+                <li class="shop-list__right__item">
+                    <RouterLink
+                        active-class="activeLink"
+                        class="baseLink"
+                        to="/login"
+                        >Login</RouterLink
+                    >
+                </li>
             </ul>
         </nav>
     </header>
@@ -82,7 +89,7 @@ import { RouterLink } from "vue-router";
 
 .shop-list__left__item a,
 .shop-list__right__item svg,
-.shop-list__right__item p {
+.shop-list__right__item a {
     text-decoration: none;
     transition: color 0.3s ease;
 }
