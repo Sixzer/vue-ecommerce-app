@@ -1,20 +1,18 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
+import { useShopStore } from "@/stores/store";
 
-const emit = defineEmits<{
-    (e: "sort", value: string): void;
-    (e: "find", value: string): void;
-}>();
+const shopStore = useShopStore();
 
 const selectedSort = ref<string>("");
 const selectedSearch = ref<string>("");
 
 watch(selectedSort, () => {
-    emit("sort", selectedSort.value);
+    shopStore.selectedSort = selectedSort.value;
 });
 
 watch(selectedSearch, () => {
-    emit("find", selectedSearch.value);
+    shopStore.selectedSearch = selectedSearch.value;
 });
 </script>
 
@@ -150,3 +148,4 @@ watch(selectedSearch, () => {
     color: #333;
 }
 </style>
+@/stores/store

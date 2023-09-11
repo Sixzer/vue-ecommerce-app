@@ -1,44 +1,30 @@
 <script setup lang="ts">
 import { ref, onMounted, watch, watchEffect } from "vue";
-import axios from "axios";
+
 import { type ITovar } from "@/assets/interfaces";
+import { useShopStore } from "@/stores/store";
 import ProductsItem from "@/components/UI/ProductsItem.vue";
 import NoResults from "@/components/UI/NoResults.vue";
 import Spinner from "@/components/UI/Spinner.vue";
 
-const responseApi = ref<ITovar[]>([]);
+const shopStore = useShopStore();
 const productsList = ref<ITovar[]>([]);
-const props = defineProps<{ sortMethod: string; findMethod: string }>();
 
-onMounted(() => fetchUsers());
-
-const fetchUsers = async () => {
-    try {
-        const response = await axios.get(
-            "https://fakestoreapi.com/products?limit=15"
-        );
-
-        responseApi.value = response.data;
-    } catch (error) {
-        console.log(error);
-    }
-};
-
-watch(responseApi, () => {
-    productsList.value = responseApi.value;
+onMounted(() => {
+    productsList.value = shopStore.data;
 });
 
 watch(
-    () => props.sortMethod,
+    () => shopStore.selectedSort,
     (method) => {
         switch (method) {
             case "priceHighToLow":
-                productsList.value = productsList.value?.sort(
+                productsList.value = productsList.value.sort(
                     (a, b) => b.price - a.price
                 );
                 break;
             case "priceLowToHigh":
-                productsList.value = productsList.value?.sort(
+                productsList.value = productsList.value.sort(
                     (a, b) => a.price - b.price
                 );
                 break;
@@ -58,10 +44,10 @@ watch(
 );
 
 watchEffect(() => {
-    productsList.value = [...responseApi.value].filter((product) =>
+    productsList.value = [...shopStore.data].filter((product) =>
         product.title
             .toLowerCase()
-            .includes(props.findMethod.trim().toLowerCase())
+            .includes(shopStore.selectedSearch.trim().toLowerCase())
     );
 });
 </script>
@@ -75,7 +61,10 @@ watchEffect(() => {
                 :key="product.id"
             />
         </ul>
-        <NoResults v-else-if="findMethod" :find="findMethod" />
+        <NoResults
+            v-else-if="shopStore.selectedSearch"
+            :search="shopStore.selectedSearch"
+        />
         <Spinner v-else />
     </section>
 </template>
@@ -90,3 +79,4 @@ watchEffect(() => {
     row-gap: 20px;
 }
 </style>
+@/stores/store

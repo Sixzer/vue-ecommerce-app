@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = defineProps<{ find: string }>();
+const props = defineProps<{ search: string }>();
 </script>
 
 <template>
@@ -20,7 +20,7 @@ const props = defineProps<{ find: string }>();
         </svg>
 
         <h2 class="noResults-title">
-            Ничего не нашли по запросу «{{ props.find }}»
+            Ничего не нашли по запросу «{{ props.search }}»
         </h2>
         <p class="noResults-desc">
             Попробуйте поискать по-другому или сократить запрос.

@@ -1,25 +1,20 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import axios from "axios";
 import { type ITovar } from "@/assets/interfaces";
 import ProductsItem from "@/components/UI/ProductsItem.vue";
 import Spinner from "@/components/UI/Spinner.vue";
 
-onMounted(() => fetchUsers());
+import { useShopStore } from "@/stores/store";
+
+const shopStore = useShopStore();
 
 const productsList = ref<ITovar[] | null>(null);
 
-const fetchUsers = async () => {
-    try {
-        const response = await axios.get(
-            "https://fakestoreapi.com/products?limit=5"
-        );
-
-        productsList.value = response.data;
-    } catch (error) {
-        console.log(error);
-    }
-};
+onMounted(() => {
+    productsList.value = [...shopStore.data]
+        .sort((item1, item2) => item2.rating.rate - item1.rating.rate)
+        .slice(0, 5);
+});
 </script>
 
 <template>

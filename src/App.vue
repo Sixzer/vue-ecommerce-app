@@ -1,6 +1,15 @@
 <script setup lang="ts">
+import { onMounted } from "vue";
 import ShopHeader from "./components/ShopHeader.vue";
 import ShopMain from "./components/ShopMain.vue";
+import { useShopStore } from "@/stores/store";
+
+const shopStore = useShopStore();
+const PRODUCTS_AMOUNT: number = 15;
+
+onMounted(() => {
+    shopStore.fetchDataAPI(PRODUCTS_AMOUNT);
+});
 </script>
 
 <template>
@@ -83,3 +92,4 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 </style>
+@/stores/store
