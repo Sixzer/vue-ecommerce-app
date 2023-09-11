@@ -19,11 +19,9 @@ const props = defineProps<{ search: string }>();
             />
         </svg>
 
-        <h2 class="noResults-title">
-            Ничего не нашли по запросу «{{ props.search }}»
-        </h2>
+        <h2 class="noResults-title">No results for «{{ props.search }}»</h2>
         <p class="noResults-desc">
-            Попробуйте поискать по-другому или сократить запрос.
+            Try checking your spelling or use more general terms
         </p>
     </section>
 </template>
