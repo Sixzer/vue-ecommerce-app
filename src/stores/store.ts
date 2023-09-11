@@ -8,10 +8,10 @@ export const useShopStore = defineStore("shop", () => {
     const selectedSort = ref<string>("");
     const selectedSearch = ref<string>("");
 
-    async function fetchDataAPI(amount: number) {
+    async function fetchDataAPI(offset: number = 20) {
         try {
             const response = await axios.get(
-                `https://fakestoreapi.com/products?limit=${amount}`
+                `https://fakestoreapi.com/products?limit=${offset}`
             );
 
             data.value = response.data;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, watch, watchEffect } from "vue";
+import { ref, watch, watchEffect } from "vue";
 
 import { type ITovar } from "@/assets/interfaces";
 import { useShopStore } from "@/stores/store";

@@ -5,10 +5,10 @@ import ShopMain from "./components/ShopMain.vue";
 import { useShopStore } from "@/stores/store";
 
 const shopStore = useShopStore();
-const PRODUCTS_AMOUNT: number = 30;
+const BASE_OFFSET = 20;
 
 onMounted(() => {
-    shopStore.fetchDataAPI(PRODUCTS_AMOUNT);
+    shopStore.fetchDataAPI(BASE_OFFSET);
 });
 </script>
 
