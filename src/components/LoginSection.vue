@@ -4,7 +4,7 @@
     <div class="auth-container">
         <form class="auth-form" @submit.prevent>
             <h2 class="auth-title">Authorization</h2>
-            <div class="form-group">
+            <div class="form-group__username">
                 <label for="username" class="form-label">Username:</label>
                 <input
                     type="text"
@@ -13,7 +13,7 @@
                     placeholder="Enter username"
                 />
             </div>
-            <div class="form-group">
+            <div class="form-group__password">
                 <label for="password" class="form-label">Password:</label>
                 <input
                     type="password"
@@ -49,7 +49,8 @@
     margin-bottom: 20px;
 }
 
-.form-group {
+.form-group__password,
+.form-group__username {
     margin-bottom: 15px;
 }
 
