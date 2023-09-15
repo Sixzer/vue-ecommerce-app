@@ -1,15 +1,6 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
 import ShopHeader from "./components/ShopHeader.vue";
 import ShopMain from "./components/ShopMain.vue";
-import { useShopStore } from "@/stores/store";
-
-const shopStore = useShopStore();
-const BASE_OFFSET = 20;
-
-onMounted(() => {
-    shopStore.fetchDataAPI(BASE_OFFSET);
-});
 </script>
 
 <template>

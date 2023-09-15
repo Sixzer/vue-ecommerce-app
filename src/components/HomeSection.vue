@@ -1,21 +1,15 @@
 <script setup lang="ts">
-import { ref, watchEffect } from "vue";
-import { type ITovar } from "@/assets/interfaces";
+import { onMounted, ref } from "vue";
+import { type IProduct } from "@/assets/interfaces";
 import ProductsItem from "@/components/UI/ProductsItem.vue";
 import Spinner from "@/components/UI/Spinner.vue";
-import Button from "primevue/button";
-//theme
-// import "primevue/resources/themes/md-dark-indigo/theme.css";
-
 import { useShopStore } from "@/stores/store";
 
 const shopStore = useShopStore();
-const productsList = ref<ITovar[]>([]);
+const productsList = ref<IProduct[]>([]);
 
-watchEffect(() => {
-    productsList.value = [...shopStore.data]
-        .sort((item1, item2) => item2.rating.rate - item1.rating.rate)
-        .slice(0, 5);
+onMounted(() => {
+    shopStore.getFeaturedProducts().then((data) => (productsList.value = data));
 });
 </script>
 
@@ -26,13 +20,13 @@ watchEffect(() => {
 
     <article class="featuredProducts">
         <h2 class="featuredProducts__title">Featured products</h2>
-        <ul class="featuredProducts__list" v-if="productsList.length > 0">
+        <section class="featuredProducts__list" v-if="productsList.length > 0">
             <ProductsItem
                 :product="product"
                 v-for="product in productsList"
                 :key="product.id"
             />
-        </ul>
+        </section>
         <Spinner v-else />
     </article>
 

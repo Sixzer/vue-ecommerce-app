@@ -3,16 +3,15 @@ import { ref, watch } from "vue";
 import { useShopStore } from "@/stores/store";
 
 const shopStore = useShopStore();
+const sortQuery = ref<string>("");
+const searchQuery = ref<string>("");
 
-const selectedSort = ref<string>("");
-const selectedSearch = ref<string>("");
-
-watch(selectedSort, () => {
-    shopStore.selectedSort = selectedSort.value;
+watch(sortQuery, () => {
+    shopStore.sortQuery = sortQuery.value;
 });
 
-watch(selectedSearch, () => {
-    shopStore.selectedSearch = selectedSearch.value;
+watch(searchQuery, () => {
+    shopStore.searchQuery = searchQuery.value;
 });
 </script>
 
@@ -42,7 +41,7 @@ watch(selectedSearch, () => {
                     type="text"
                     class="products-list__input"
                     placeholder="Search..."
-                    v-model="selectedSearch"
+                    v-model="searchQuery"
                 />
 
                 <svg
@@ -61,7 +60,7 @@ watch(selectedSearch, () => {
                 </svg>
             </li>
             <li class="products-list__item">
-                <select class="products-item__select" v-model="selectedSort">
+                <select class="products-item__select" v-model="sortQuery">
                     <option disabled value="">Sort by...</option>
                     <option value="priceHighToLow">Price high to low</option>
                     <option value="priceLowToHigh">Price low to high</option>

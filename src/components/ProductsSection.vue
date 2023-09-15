@@ -1,41 +1,51 @@
 <script setup lang="ts">
-import { ref, watch, watchEffect } from "vue";
-
-import { type ITovar } from "@/assets/interfaces";
+import { onMounted, ref, watch } from "vue";
+import { type IProduct } from "@/assets/interfaces";
 import { useShopStore } from "@/stores/store";
 import ProductsItem from "@/components/UI/ProductsItem.vue";
 import NoResults from "@/components/UI/NoResults.vue";
 import Spinner from "@/components/UI/Spinner.vue";
 
 const shopStore = useShopStore();
-const productsList = ref<ITovar[]>([]);
+const productsList = ref<IProduct[]>([]);
+const BASE_OFFSET: number = 10;
 
-watchEffect(() => {
-    productsList.value = [...shopStore.data];
+onMounted(() => {
+    shopStore.getAllProducts(BASE_OFFSET);
+    productsList.value = shopStore.products;
 });
 
 watch(
-    () => shopStore.selectedSort,
-    (method) => {
+    () => shopStore.products,
+    () => {
+        productsList.value = shopStore.products;
+    }
+);
+
+watch(
+    () => shopStore.sortQuery,
+    (method: string) => {
         switch (method) {
             case "priceHighToLow":
                 productsList.value = productsList.value.sort(
-                    (a, b) => b.price - a.price
+                    (product1, product2) => product2.price - product1.price
                 );
                 break;
             case "priceLowToHigh":
                 productsList.value = productsList.value.sort(
-                    (a, b) => a.price - b.price
+                    (product1, product2) => product1.price - product2.price
                 );
                 break;
             case "ratingHighToLow":
                 productsList.value = productsList.value.sort(
-                    (a, b) => b.rating.rate - a.rating.rate
+                    (product1, product2) =>
+                        product2.rating.rate - product1.rating.rate
                 );
                 break;
             case "ratingLowToHigh":
                 productsList.value = productsList.value.sort(
-                    (a, b) => a.rating.rate - b.rating.rate
+                    (product1, product2) =>
+                        product1.rating.rate - product2.rating.rate
                 );
             default:
                 break;
@@ -43,27 +53,30 @@ watch(
     }
 );
 
-watchEffect(() => {
-    productsList.value = [...shopStore.data].filter((product) =>
-        product.title
-            .toLowerCase()
-            .includes(shopStore.selectedSearch.trim().toLowerCase())
-    );
-});
+watch(
+    () => shopStore.searchQuery,
+    (searchQuery: string) => {
+        productsList.value = [...productsList.value].filter((product) =>
+            product.title
+                .toLowerCase()
+                .includes(searchQuery.trim().toLowerCase())
+        );
+    }
+);
 </script>
 
 <template>
     <section class="products">
-        <ul class="products-list" v-if="productsList.length > 0">
+        <section class="products-list" v-if="productsList.length > 0">
             <ProductsItem
                 :product="product"
                 v-for="product in productsList"
                 :key="product.id"
             />
-        </ul>
+        </section>
         <NoResults
-            v-else-if="shopStore.selectedSearch"
-            :search="shopStore.selectedSearch"
+            v-else-if="shopStore.searchQuery"
+            :search="shopStore.searchQuery"
         />
         <Spinner v-else />
     </section>

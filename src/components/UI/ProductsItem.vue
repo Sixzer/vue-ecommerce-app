@@ -1,12 +1,23 @@
 <script setup lang="ts">
-import { type ITovar } from "@/assets/interfaces";
-const props = defineProps<{ product: ITovar }>();
+import { type IProduct } from "@/assets/interfaces";
+import { RouterLink } from "vue-router";
+import { useShopStore } from "@/stores/store";
 
+const props = defineProps<{ product: IProduct }>();
+const shopStore = useShopStore();
 const { product } = props;
+
+const handleClick = () => {
+    shopStore.setProductId(product.id);
+};
 </script>
 
 <template>
-    <li class="product-card">
+    <RouterLink
+        :to="'/products/' + product.id"
+        class="product-card"
+        @click="handleClick"
+    >
         <article>
             <img
                 :src="product.image"
@@ -40,7 +51,7 @@ const { product } = props;
             </article>
         </article>
         <button class="product-button">Add to cart</button>
-    </li>
+    </RouterLink>
 </template>
 
 <style scoped>
@@ -56,6 +67,7 @@ const { product } = props;
     flex-direction: column;
     align-items: stretch;
     justify-content: space-between;
+    text-decoration: none;
 }
 
 .product-card:hover {
@@ -78,6 +90,8 @@ const { product } = props;
     font-weight: bold;
     font-size: 14px;
     line-height: 18px;
+    color: #333;
+    text-wrap: balance;
 }
 
 .product-info__price,
@@ -123,6 +137,5 @@ const { product } = props;
 .product-button:hover {
     background-color: #333;
     color: white;
-    /* cursor: pointer; */
 }
 </style>

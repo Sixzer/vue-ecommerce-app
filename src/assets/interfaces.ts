@@ -2,7 +2,7 @@ interface IRating {
     rate: number;
     count: number;
 }
-export interface ITovar {
+export interface IProduct {
     id: number;
     title: string;
     price: number;
