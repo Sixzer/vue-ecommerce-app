@@ -7,11 +7,11 @@ const sortQuery = ref<string>("");
 const searchQuery = ref<string>("");
 
 watch(sortQuery, () => {
-    shopStore.sortQuery = sortQuery.value;
+    shopStore.setSortQuery(sortQuery.value);
 });
 
 watch(searchQuery, () => {
-    shopStore.searchQuery = searchQuery.value;
+    shopStore.setSearchQuery(searchQuery.value);
 });
 </script>
 

@@ -37,6 +37,14 @@ export const useShopStore = defineStore("shop", () => {
         return data;
     }
 
+    function setSearchQuery(query: string): void {
+        searchQuery.value = query;
+    }
+
+    function setSortQuery(query: string): void {
+        sortQuery.value = query;
+    }
+
     function setProductId(id: number): void {
         productId.value = id;
     }
@@ -49,6 +57,8 @@ export const useShopStore = defineStore("shop", () => {
         getAllProducts,
         getFeaturedProducts,
         getSingleProduct,
+        setSearchQuery,
+        setSortQuery,
         setProductId,
     };
 });
