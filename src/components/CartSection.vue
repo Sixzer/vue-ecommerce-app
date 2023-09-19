@@ -57,6 +57,12 @@ watch([shippingPrice, price], () => {
                         </div>
                     </div>
 
+                    <div class="cart-list__product__quantity">
+                        <span class="cart-list__product__quantity__item">
+                            {{ product.quantity }}</span
+                        >
+                    </div>
+
                     <div class="cart-list__product__price">
                         <span class="cart-list__product__price__item"
                             >{{ product.price }} $</span
@@ -190,7 +196,8 @@ watch([shippingPrice, price], () => {
     color: gray;
 }
 
-.cart-list__product__price {
+.cart-list__product__price,
+.cart-list__product__quantity {
     width: 10%;
     display: flex;
     justify-content: center;
@@ -248,7 +255,8 @@ watch([shippingPrice, price], () => {
 .cart-list__product__info__title,
 .cart-list__product__info__category,
 .cart-list__product__price__item,
-.cart-list__empty__title {
+.cart-list__empty__title,
+.cart-list__product__quantity__item {
     text-transform: uppercase;
     font-weight: bold;
 }

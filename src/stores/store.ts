@@ -52,7 +52,7 @@ export const useShopStore = defineStore("shop", () => {
 
     function addItemToCart(id: number): void {
         if (cart.value.find((product) => product.id === id)) {
-            let item = cart.value.find((product) => product.id === id);
+            const item = cart.value.find((product) => product.id === id);
 
             if (typeof item !== "undefined") {
                 item.quantity += 1;
