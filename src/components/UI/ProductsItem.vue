@@ -7,18 +7,20 @@ const props = defineProps<{ product: IProduct }>();
 const shopStore = useShopStore();
 const { product } = props;
 
+const { addItemToCart } = shopStore;
+
 const handleClick = () => {
     shopStore.setProductId(product.id);
 };
 </script>
 
 <template>
-    <RouterLink
-        :to="'/products/' + product.id"
-        class="product-card"
-        @click="handleClick"
-    >
-        <article>
+    <section class="product-card">
+        <RouterLink
+            :to="'/products/' + product.id"
+            class="product-item"
+            @click="handleClick"
+        >
             <img
                 :src="product.image"
                 alt="Product Image"
@@ -49,9 +51,11 @@ const handleClick = () => {
                     }}</span>
                 </article>
             </article>
-        </article>
-        <button class="product-button">Add to cart</button>
-    </RouterLink>
+        </RouterLink>
+        <button @click="addItemToCart(product.id)" class="product-button">
+            Add to cart
+        </button>
+    </section>
 </template>
 
 <style scoped>
@@ -67,13 +71,17 @@ const handleClick = () => {
     flex-direction: column;
     align-items: stretch;
     justify-content: space-between;
-    text-decoration: none;
 }
 
 .product-card:hover {
     transform: translateY(-5px);
+}
+
+.product-item {
+    text-decoration: none;
     cursor: pointer;
 }
+
 .product-info {
     display: flex;
     justify-content: space-between;

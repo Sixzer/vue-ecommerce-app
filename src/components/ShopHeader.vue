@@ -33,20 +33,24 @@ import { RouterLink } from "vue-router";
             </ul>
             <ul class="shop-list__right">
                 <li class="shop-list__right__item">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="{1.5}"
-                        stroke="currentColor"
-                        style="width: 24px; height: 24px"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-                        />
-                    </svg>
+                    <RouterLink
+                        to="/cart"
+                        active-class="activeLink"
+                        class="baseLink shop-list__right__item"
+                        ><svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="{1.5}"
+                            stroke="currentColor"
+                            style="width: 24px; height: 24px"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                            /></svg
+                    ></RouterLink>
                 </li>
                 <li class="shop-list__right__item">
                     <RouterLink
@@ -104,6 +108,7 @@ import { RouterLink } from "vue-router";
 }
 
 .shop-list__left__item a:hover,
+.shop-list__right__item a:hover,
 .shop-list__right__item svg:hover,
 .shop-list__right__item p:hover {
     color: gray;

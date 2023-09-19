@@ -46,7 +46,12 @@ onMounted(() => {
                         }}</span>
                     </article>
                 </article>
-                <button class="product-btn">Add to cart</button>
+                <button
+                    class="product-btn"
+                    @click="shopStore.addItemToCart(product.id)"
+                >
+                    Add to cart
+                </button>
             </article>
         </section>
         <Spinner v-else />
