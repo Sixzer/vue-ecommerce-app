@@ -5,7 +5,7 @@ import { RouterLink } from "vue-router";
 import { useShopStore } from "@/stores/store";
 const shopStore = useShopStore();
 
-const totalItems = computed(() => {
+const totalItems = computed<number>(() => {
     return shopStore.cart.reduce((acc, item) => acc + item.quantity, 0);
 });
 </script>

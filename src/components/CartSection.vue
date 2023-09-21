@@ -5,10 +5,10 @@ import { useShopStore } from "@/stores/store";
 
 const cartList = ref<ICartProduct[]>([]);
 const shopStore = useShopStore();
-const price = ref(0);
-const shippingPrice = ref("");
-const totalPrice = ref(0);
-const totalItems = computed(() => {
+const price = ref<number>(0);
+const shippingPrice = ref<string>("");
+const totalPrice = ref<number>(0);
+const totalItems = computed<number>(() => {
     return cartList.value.reduce((acc, item) => acc + item.quantity, 0);
 });
 
@@ -40,10 +40,6 @@ watch(
 watch([shippingPrice, price], () => {
     totalPrice.value = +shippingPrice.value + price.value;
 });
-
-const add = (item: any) => {
-    return (item += 1);
-};
 </script>
 
 <template>

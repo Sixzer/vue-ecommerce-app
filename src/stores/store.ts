@@ -49,7 +49,6 @@ export const useShopStore = defineStore("shop", () => {
             const item = products.value.find((product) => product.id === id);
             if (typeof item !== "undefined") {
                 cart.value.push({ ...item, quantity: 1 });
-                console.log(cart.value);
             }
         }
         // localStorage.setItem("cart", JSON.stringify(cart.value));
@@ -63,7 +62,7 @@ export const useShopStore = defineStore("shop", () => {
         // localStorage.setItem("cart", JSON.stringify(cart.value));
     }
 
-    function increaseItemQuantity(id: number) {
+    function increaseItemQuantity(id: number): void {
         const item = cart.value.find((product) => product.id === id);
 
         if (typeof item !== "undefined") {
@@ -71,7 +70,7 @@ export const useShopStore = defineStore("shop", () => {
         }
     }
 
-    function decreaseItemQuantity(id: number) {
+    function decreaseItemQuantity(id: number): void {
         const item = cart.value.find((product) => product.id === id);
 
         if (typeof item !== "undefined" && item.quantity) {
