@@ -63,6 +63,22 @@ export const useShopStore = defineStore("shop", () => {
         // localStorage.setItem("cart", JSON.stringify(cart.value));
     }
 
+    function increaseItemQuantity(id: number) {
+        const item = cart.value.find((product) => product.id === id);
+
+        if (typeof item !== "undefined") {
+            item.quantity += 1;
+        }
+    }
+
+    function decreaseItemQuantity(id: number) {
+        const item = cart.value.find((product) => product.id === id);
+
+        if (typeof item !== "undefined" && item.quantity) {
+            item.quantity -= 1;
+        }
+    }
+
     return {
         products,
         productId,
@@ -76,5 +92,7 @@ export const useShopStore = defineStore("shop", () => {
         setProductId,
         addItemToCart,
         removeItemFromCart,
+        increaseItemQuantity,
+        decreaseItemQuantity,
     };
 });

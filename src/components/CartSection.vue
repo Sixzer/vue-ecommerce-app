@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ICartProduct } from "@/assets/interfaces";
-import { onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useShopStore } from "@/stores/store";
 
 const cartList = ref<ICartProduct[]>([]);
@@ -8,6 +8,15 @@ const shopStore = useShopStore();
 const price = ref(0);
 const shippingPrice = ref("");
 const totalPrice = ref(0);
+const totalItems = computed(() => {
+    return (
+        cartList.value.length *
+        cartList.value.reduce((acc, item) => acc + item.quantity, 0)
+    );
+});
+
+const { increaseItemQuantity, decreaseItemQuantity, removeItemFromCart } =
+    shopStore;
 
 onMounted(() => {
     cartList.value = shopStore.cart;
@@ -20,16 +29,24 @@ watch(
     }
 );
 
-watch(cartList, () => {
-    price.value = cartList.value.reduce(
-        (acc, val) => (acc += val.price * val.quantity),
-        0
-    );
-});
+watch(
+    cartList,
+    () => {
+        price.value = cartList.value.reduce(
+            (acc, val) => (acc += val.price * val.quantity),
+            0
+        );
+    },
+    { deep: true }
+);
 
 watch([shippingPrice, price], () => {
     totalPrice.value = +shippingPrice.value + price.value;
 });
+
+const add = (item: any) => {
+    return (item += 1);
+};
 </script>
 
 <template>
@@ -38,7 +55,7 @@ watch([shippingPrice, price], () => {
             <article class="cart-list__header">
                 <h2 class="cart-list__header__title">Shopping cart</h2>
                 <span class="cart-list__header__label"
-                    >{{ cartList.length }} items</span
+                    >{{ totalItems }} items</span
                 >
             </article>
             <section class="cart-list__item" v-if="cartList.length > 0">
@@ -58,9 +75,21 @@ watch([shippingPrice, price], () => {
                     </div>
 
                     <div class="cart-list__product__quantity">
+                        <button
+                            class="cart-list__product__quantity__increase"
+                            @click="decreaseItemQuantity(product.id)"
+                        >
+                            -
+                        </button>
                         <span class="cart-list__product__quantity__item">
                             {{ product.quantity }}</span
                         >
+                        <button
+                            class="cart-list__product__quantity__decrease"
+                            @click="increaseItemQuantity(product.id)"
+                        >
+                            +
+                        </button>
                     </div>
 
                     <div class="cart-list__product__price">
@@ -70,7 +99,7 @@ watch([shippingPrice, price], () => {
                     </div>
                     <button
                         class="cart-list__product__btn"
-                        @click="shopStore.removeItemFromCart(product.id)"
+                        @click="removeItemFromCart(product.id)"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -100,7 +129,7 @@ watch([shippingPrice, price], () => {
             <section class="cart-summary__item">
                 <div class="cart-summary__item__header">
                     <h3 class="cart-summary__item__header__title">
-                        items {{ cartList.length }}
+                        items {{ totalItems }}
                     </h3>
                     <div class="cart-summary__item__header__label">
                         {{ price.toFixed(2) }} $
@@ -202,6 +231,18 @@ watch([shippingPrice, price], () => {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.cart-list__product__quantity__item {
+    margin: 0 10px;
+}
+
+.cart-list__product__quantity__increase,
+.cart-list__product__quantity__decrease {
+    border: none;
+    background-color: transparent;
+    font-size: 24px;
+    cursor: pointer;
 }
 
 .cart-list__product__btn {

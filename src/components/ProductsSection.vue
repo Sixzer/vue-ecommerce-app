@@ -10,7 +10,6 @@ const shopStore = useShopStore();
 const productsList = ref<IProduct[]>([]);
 
 onMounted(() => {
-    // shopStore.getAllProducts();
     productsList.value = shopStore.products;
 });
 
