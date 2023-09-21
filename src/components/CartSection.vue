@@ -9,10 +9,7 @@ const price = ref(0);
 const shippingPrice = ref("");
 const totalPrice = ref(0);
 const totalItems = computed(() => {
-    return (
-        cartList.value.length *
-        cartList.value.reduce((acc, item) => acc + item.quantity, 0)
-    );
+    return cartList.value.reduce((acc, item) => acc + item.quantity, 0);
 });
 
 const { increaseItemQuantity, decreaseItemQuantity, removeItemFromCart } =
