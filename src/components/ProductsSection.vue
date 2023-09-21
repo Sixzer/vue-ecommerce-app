@@ -54,7 +54,7 @@ watch(
 watch(
     () => shopStore.searchQuery,
     (searchQuery: string) => {
-        productsList.value = [...shopStore.products].filter((product) =>
+        productsList.value = shopStore.products.filter((product) =>
             product.title
                 .toLowerCase()
                 .includes(searchQuery.trim().toLowerCase())
