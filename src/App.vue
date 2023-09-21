@@ -1,6 +1,14 @@
 <script setup lang="ts">
+import { onMounted } from "vue";
+import { useShopStore } from "./stores/store";
 import ShopHeader from "./components/ShopHeader.vue";
 import ShopMain from "./components/ShopMain.vue";
+
+const shopStore = useShopStore();
+
+onMounted(() => {
+    shopStore.getAllProducts();
+});
 </script>
 
 <template>

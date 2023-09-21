@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { computed } from "vue";
 import { type IProduct } from "@/assets/interfaces";
 import ProductsItem from "@/components/UI/ProductsItem.vue";
 import Spinner from "@/components/UI/Spinner.vue";
 import { useShopStore } from "@/stores/store";
 
 const shopStore = useShopStore();
-const productsList = ref<IProduct[]>([]);
-
-onMounted(() => {
-    shopStore.getFeaturedProducts().then((data) => (productsList.value = data));
+const productsList = computed<IProduct[]>(() => {
+    return shopStore.products
+        .sort((item1, item2) => item2.rating.rate - item1.rating.rate)
+        .slice(0, 5);
 });
 </script>
 

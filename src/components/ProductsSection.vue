@@ -8,10 +8,9 @@ import Spinner from "@/components/UI/Spinner.vue";
 
 const shopStore = useShopStore();
 const productsList = ref<IProduct[]>([]);
-const BASE_OFFSET: number = 10;
 
 onMounted(() => {
-    shopStore.getAllProducts(BASE_OFFSET);
+    // shopStore.getAllProducts();
     productsList.value = shopStore.products;
 });
 

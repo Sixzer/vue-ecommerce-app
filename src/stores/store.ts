@@ -10,24 +10,12 @@ export const useShopStore = defineStore("shop", () => {
     const productId = ref<number>(0);
     const cart = ref<ICartProduct[]>([]);
 
-    async function getAllProducts(offset: number): Promise<void> {
+    async function getAllProducts(offset: number = 20): Promise<void> {
         const { data } = await axios.get<IProduct[]>(
             `https://fakestoreapi.com/products?limit=${offset}`
         );
 
         products.value = data;
-    }
-
-    async function getFeaturedProducts(
-        offset: number = 20
-    ): Promise<IProduct[]> {
-        const { data } = await axios.get<IProduct[]>(
-            `https://fakestoreapi.com/products?limit=${offset}`
-        );
-
-        return data
-            .sort((item1, item2) => item2.rating.rate - item1.rating.rate)
-            .slice(0, 5);
     }
 
     async function getSingleProduct(id: number): Promise<IProduct> {
@@ -82,7 +70,6 @@ export const useShopStore = defineStore("shop", () => {
         sortQuery,
         searchQuery,
         getAllProducts,
-        getFeaturedProducts,
         getSingleProduct,
         setSearchQuery,
         setSortQuery,
