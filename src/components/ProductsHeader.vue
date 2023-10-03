@@ -5,7 +5,7 @@ import Dropdown from "primevue/dropdown";
 import InputText from "primevue/inputtext";
 
 const shopStore = useShopStore();
-const sortQuery = ref<any>("");
+const sortQuery = ref<string>("");
 const searchQuery = ref<string>("");
 
 const sortOptions = ref([
