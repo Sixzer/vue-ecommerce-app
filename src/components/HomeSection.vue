@@ -2,8 +2,9 @@
 import { computed } from "vue";
 import { type IProduct } from "@/assets/interfaces";
 import ProductsItem from "@/components/UI/ProductsItem.vue";
-import Spinner from "@/components/UI/Spinner.vue";
 import { useShopStore } from "@/stores/store";
+import Button from "primevue/button";
+import InputText from "primevue/inputtext";
 
 const shopStore = useShopStore();
 const productsList = computed<IProduct[]>(() => {
@@ -14,13 +15,16 @@ const productsList = computed<IProduct[]>(() => {
 </script>
 
 <template>
-    <header class="header">
-        <h1 class="header-title">eCommerce App</h1>
+    <header class="text-center py-3">
+        <h1 class="text-xlg m-0">eCommerce App</h1>
     </header>
 
-    <article class="featuredProducts">
-        <h2 class="featuredProducts__title">Featured products</h2>
-        <section class="featuredProducts__list" v-if="productsList.length > 0">
+    <article class="flex flex-column">
+        <h2 class="align-self-center">Featured products</h2>
+        <section
+            class="productsList-grid p-0 list-none justify-content-between row-gap-2"
+            v-if="productsList.length > 0"
+        >
             <ProductsItem
                 :product="product"
                 v-for="product in productsList"
@@ -30,75 +34,28 @@ const productsList = computed<IProduct[]>(() => {
         <Spinner v-else />
     </article>
 
-    <article class="newsletter">
+    <article class="text-center my-5">
         <h2>Subscribe to newsletter</h2>
-        <p>Receive push notifications of new goods and discounts.</p>
-        <form @submit.prevent>
-            <input type="email" placeholder="Enter your email..." />
-            <button type="submit">Subscribe</button>
+        <p class="my-2">
+            Receive push notifications of new goods and discounts.
+        </p>
+        <form
+            @submit.prevent
+            class="flex justify-content-center align-items-center"
+        >
+            <InputText
+                type="text"
+                placeholder="Enter email..."
+                class="p-2 mr-3"
+            />
+            <Button type="submit" label="Subscribe" class="p-2" />
         </form>
     </article>
 </template>
 
 <style scoped>
-.header {
-    text-align: center;
-    padding: 30px 0;
-}
-
-.header-title {
-    font-size: 36px;
-    margin: 0;
-}
-
-.featuredProducts {
-    display: flex;
-    flex-direction: column;
-    align-items: space-between;
-}
-
-.featuredProducts__title {
-    align-self: center;
-}
-
-.newsletter {
-    text-align: center;
-    margin: 40px 0;
-}
-
-.newsletter p {
-    margin: 10px 0;
-}
-
-.newsletter form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.newsletter input[type="email"] {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    width: 250px;
-    margin-right: 10px;
-}
-
-.newsletter button {
-    background-color: #333;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.featuredProducts__list {
-    padding: 0;
-    list-style: none;
+.productsList-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, 270px);
-    justify-content: space-between;
-    row-gap: 20px;
 }
 </style>

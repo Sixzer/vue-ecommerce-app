@@ -4,7 +4,7 @@ import { type IProduct } from "@/assets/interfaces";
 import { useShopStore } from "@/stores/store";
 import ProductsItem from "@/components/UI/ProductsItem.vue";
 import NoResults from "@/components/UI/NoResults.vue";
-import Spinner from "@/components/UI/Spinner.vue";
+import ProgressSpinner from "primevue/progressspinner";
 
 const shopStore = useShopStore();
 const productsList = ref<IProduct[]>([]);
@@ -64,8 +64,11 @@ watch(
 </script>
 
 <template>
-    <section class="products">
-        <section class="products-list" v-if="productsList.length > 0">
+    <section>
+        <section
+            class="products-grid p-0 list-none justify-content-between gap-2"
+            v-if="productsList.length > 0"
+        >
             <ProductsItem
                 :product="product"
                 v-for="product in productsList"
@@ -76,18 +79,15 @@ watch(
             v-else-if="shopStore.searchQuery"
             :search="shopStore.searchQuery"
         />
-        <Spinner v-else />
+        <section v-else class="card flex justify-content-center">
+            <ProgressSpinner />
+        </section>
     </section>
 </template>
 
 <style scoped>
-.products-list {
-    padding: 0;
-    list-style: none;
+.products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, 280px);
-    justify-content: space-between;
-    row-gap: 20px;
 }
 </style>
-@/stores/store
