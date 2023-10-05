@@ -3,41 +3,16 @@ const props = defineProps<{ search: string }>();
 </script>
 
 <template>
-    <section class="noResults">
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="{1.5}"
-            stroke="currentColor"
-            style="width: 100px; height: 100px"
-        >
-            <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
-            />
-        </svg>
+    <section
+        class="noResults flex flex-column justify-content-center align-items-center m-4"
+    >
+        <i class="pi pi-exclamation-triangle" style="font-size: 6rem"></i>
 
-        <h2 class="noResults-title">No results for «{{ props.search }}»</h2>
-        <p class="noResults-desc">
-            Try checking your spelling or use more general terms
-        </p>
+        <h2 class="font-bold text-lg my-2">
+            No results for «{{ props.search }}»
+        </h2>
+        <p>Try checking your spelling or use more general terms</p>
     </section>
 </template>
 
-<style scoped>
-.noResults {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 20px;
-}
-
-.noResults-title {
-    font-weight: bold;
-    font-size: 24px;
-    margin: 10px 0;
-}
-</style>
+<style scoped></style>
