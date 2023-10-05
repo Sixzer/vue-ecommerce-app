@@ -16,16 +16,24 @@ import Textarea from "primevue/textarea";
         </section>
 
         <section class="flex gap-1">
-            <h2 class="text-2xl mb-3">Check this repository on</h2>
-            <div class="card flex justify-content-center">
+            <h2 class="text-2xl align-self-center mr-2">
+                Check this repository on
+            </h2>
+
+            <a
+                href="https://github.com/Sixzer/vue-ecommerce-app"
+                class="card flex justify-content-center align-items-start no-underline"
+            >
                 <Button
                     icon="pi pi-github"
                     severity="info"
                     link
                     rounded
                     aria-label="Github"
+                    style="color: black"
+                    size="large"
                 />
-            </div>
+            </a>
         </section>
 
         <section class="flex flex-column py-3">
