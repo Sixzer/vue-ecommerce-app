@@ -3,6 +3,11 @@ import type { ICartProduct } from "@/assets/interfaces";
 import { computed, onMounted, ref, watch } from "vue";
 import { useShopStore } from "@/stores/store";
 
+import Divider from "primevue/divider";
+import InputText from "primevue/inputtext";
+import Button from "primevue/button";
+import Dropdown from "primevue/dropdown";
+
 const cartList = ref<ICartProduct[]>([]);
 const shopStore = useShopStore();
 const price = ref<number>(0);
@@ -11,6 +16,11 @@ const totalPrice = ref<number>(0);
 const totalItems = computed<number>(() => {
     return cartList.value.reduce((acc, item) => acc + item.quantity, 0);
 });
+const deliveryOptions = ref([
+    { label: "Pickup Point + 0$", value: "0" },
+    { label: "Standart Delivery + 5$", value: "5" },
+    { label: "Extra Delivery + 10$", value: "10" },
+]);
 
 const { increaseItemQuantity, decreaseItemQuantity, removeItemFromCart } =
     shopStore;
@@ -43,302 +53,139 @@ watch([shippingPrice, price], () => {
 </script>
 
 <template>
-    <section class="cart">
-        <section class="cart-list">
-            <article class="cart-list__header">
-                <h2 class="cart-list__header__title">Shopping cart</h2>
-                <span class="cart-list__header__label"
-                    >{{ totalItems }} items</span
-                >
+    <section
+        class="cart flex align-items-stretch justify-content-between m-4 border-round-md border-gray-200 shadow-5"
+    >
+        <section class="w-8 p-4">
+            <article class="flex justify-content-between align-items-end pb-5">
+                <h2 class="font-bold uppercase">Shopping cart</h2>
+                <span class="font-bold uppercase">{{ totalItems }} items</span>
             </article>
-            <section class="cart-list__item" v-if="cartList.length > 0">
-                <div class="cart-list__product" v-for="product in cartList">
-                    <img
-                        class="cart-list__product__img"
-                        :src="product.image"
-                        alt="img"
-                    />
-                    <div class="cart-list__product__info">
-                        <div class="cart-list__product__info__title">
-                            {{ product.title }}
-                        </div>
-                        <div class="cart-list__product__info__category">
-                            {{ product.category }}
-                        </div>
-                    </div>
 
-                    <div class="cart-list__product__quantity">
-                        <button
-                            class="cart-list__product__quantity__increase"
-                            @click="decreaseItemQuantity(product.id)"
-                        >
-                            -
-                        </button>
-                        <span class="cart-list__product__quantity__item">
-                            {{ product.quantity }}</span
-                        >
-                        <button
-                            class="cart-list__product__quantity__decrease"
-                            @click="increaseItemQuantity(product.id)"
-                        >
-                            +
-                        </button>
-                    </div>
+            <Divider />
 
-                    <div class="cart-list__product__price">
-                        <span class="cart-list__product__price__item"
-                            >{{ product.price }} $</span
-                        >
-                    </div>
-                    <button
-                        class="cart-list__product__btn"
-                        @click="removeItemFromCart(product.id)"
+            <section class="" v-if="cartList.length > 0">
+                <section class="" v-for="product in cartList">
+                    <section
+                        class="flex justify-content-between align-items-center py-5"
                     >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="{1.5}"
-                            stroke="currentColor"
-                            style="width: 20px; height: 20px"
+                        <img
+                            class="w-1 h-6rem"
+                            style="object-fit: contain"
+                            :src="product.image"
+                            alt="img"
+                        />
+                        <div class="w-6">
+                            <div
+                                class="uppercase font-bold"
+                                style="text-wrap: balance"
+                            >
+                                {{ product.title }}
+                            </div>
+                            <div class="text-500 uppercase font-bold">
+                                {{ product.category }}
+                            </div>
+                        </div>
+
+                        <div
+                            class="flex justify-content-center align-items-center"
                         >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M6 18L18 6M6 6l12 12"
+                            <Button
+                                @click="decreaseItemQuantity(product.id)"
+                                icon="pi pi-minus"
+                                severity="secondary"
+                                text
+                                rounded
+                                aria-label="minus"
                             />
-                        </svg>
-                    </button>
-                </div>
+                            <span class="px-3 font-bold uppercase">
+                                {{ product.quantity }}</span
+                            >
+
+                            <Button
+                                @click="increaseItemQuantity(product.id)"
+                                icon="pi pi-plus"
+                                severity="secondary"
+                                text
+                                rounded
+                                aria-label="plus"
+                            />
+                        </div>
+
+                        <div
+                            class="flex justify-content-center align-items-center w-1"
+                        >
+                            <span class="uppercase font-bold"
+                                >{{ product.price }} $</span
+                            >
+                        </div>
+
+                        <Button
+                            @click="removeItemFromCart(product.id)"
+                            icon="pi pi-trash"
+                            severity="secondary"
+                            text
+                            rounded
+                            aria-label="trash"
+                        />
+                    </section>
+                    <Divider />
+                </section>
             </section>
-            <section v-else class="cart-list__empty">
-                <h3 class="cart-list__empty__title">Cart is empty</h3>
+            <section v-else class="pt-3">
+                <h3 class="font-bold uppercase">Cart is empty</h3>
             </section>
         </section>
-        <section class="cart-summary">
-            <article class="cart-summary__header">
-                <h2 class="cart-summary__header__title">Summary</h2>
+        <section class="w-4 p-4 border-round-right">
+            <article class="flex justify-content-between align-items-end pb-5">
+                <h2 class="font-bold uppercase">Summary</h2>
             </article>
-            <section class="cart-summary__item">
-                <div class="cart-summary__item__header">
-                    <h3 class="cart-summary__item__header__title">
-                        items {{ totalItems }}
-                    </h3>
-                    <div class="cart-summary__item__header__label">
+
+            <Divider />
+
+            <section class="flex flex-column gap-4 py-5">
+                <div class="flex justify-content-between align-items-end">
+                    <h3 class="font-bold uppercase">items {{ totalItems }}</h3>
+                    <div class="font-bold uppercase">
                         {{ price.toFixed(2) }} $
                     </div>
                 </div>
-                <div class="cart-summary__item__shipping">
-                    <h3 class="cart-summary__item__shipping__title">
-                        shipping
-                    </h3>
-                    <select
-                        class="cart-summary__item__shipping__select"
+
+                <div class="card flex flex-column gap-2 w-full">
+                    <h3 class="font-bold uppercase">shipping</h3>
+                    <Dropdown
                         v-model="shippingPrice"
-                    >
-                        <option value="" disabled>
-                            Choose delivery method
-                        </option>
-                        <option value="0">Pickup Point + 0$</option>
-                        <option value="5">Standart Delivery + 5$</option>
-                        <option value="10">Extra Delivery + 10$</option>
-                    </select>
+                        :options="deliveryOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        placeholder="Choose delivery method"
+                        class="w-full"
+                    />
                 </div>
-                <div class="cart-summary__item__promo">
-                    <h3 class="cart-summary__item__promo__title">promo</h3>
-                    <input
-                        class="cart-summary__item__promo__input"
-                        type="text"
-                        placeholder="Enter your code..."
+
+                <div class="flex flex-column gap-2">
+                    <h3 for="promo" class="font-bold uppercase">promo</h3>
+                    <InputText
+                        id="promo"
+                        aria-describedby="promo-help"
+                        placeholder="Enter promocode"
                     />
                 </div>
             </section>
-            <section class="cart-summary__checkout">
-                <div class="cart-summary__checkout__header">
-                    <h3 class="cart-summary__checkout__header__title">
-                        total price
-                    </h3>
-                    <span class="cart-summary__checkout__header__label"
+
+            <Divider />
+
+            <section class="flex flex-column gap-4 py-4">
+                <div class="flex justify-content-between align-items-end">
+                    <h3 class="font-bold uppercase">total price</h3>
+                    <span class="font-bold uppercase"
                         >{{ totalPrice.toFixed(2) }} $</span
                     >
                 </div>
-                <button class="cart-summary__checkout__btn">checkout</button>
+                <Button label="CHECKOUT" />
             </section>
         </section>
     </section>
 </template>
 
-<style scoped>
-.cart {
-    display: flex;
-    align-items: stretch;
-    justify-content: space-between;
-    margin: 30px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.cart-list {
-    border-radius: 15px 0 0 15px;
-    width: 70%;
-    padding: 30px;
-}
-
-.cart-list__item {
-}
-
-.cart-list__empty {
-    padding-top: 30px;
-}
-
-.cart-list__product {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 30px 0 30px 0;
-    border-bottom: 1px solid gray;
-}
-
-.cart-list__product__img {
-    height: 100px;
-    width: 100px;
-    object-fit: contain;
-}
-
-.cart-list__product__info {
-    width: 50%;
-}
-
-.cart-list__product__info__title {
-    text-wrap: balance;
-}
-
-.cart-list__product__info__category {
-    color: gray;
-}
-
-.cart-list__product__price,
-.cart-list__product__quantity {
-    width: 10%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.cart-list__product__quantity__item {
-    margin: 0 10px;
-}
-
-.cart-list__product__quantity__increase,
-.cart-list__product__quantity__decrease {
-    border: none;
-    background-color: transparent;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.cart-list__product__btn {
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    padding: 10px;
-    height: 40px;
-    width: 40px;
-}
-
-.cart-list__header,
-.cart-summary__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    border-bottom: 1px solid gray;
-    padding-bottom: 30px;
-}
-
-.cart-summary {
-    border-radius: 0 5px 5px 0;
-    background-color: rgb(228, 228, 228);
-    width: 30%;
-    padding: 30px;
-}
-
-.cart-summary__item {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    padding: 30px 0 30px 0;
-    border-bottom: 1px solid gray;
-}
-
-.cart-summary__item__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-}
-
-.cart-summary__item__header__title,
-.cart-summary__item__header__label,
-.cart-summary__item__shipping__title,
-.cart-summary__item__promo__title,
-.cart-summary__checkout__header__title,
-.cart-summary__checkout__header__label,
-.cart-list__header__title,
-.cart-summary__header__title,
-.cart-list__header__label,
-.cart-list__product__info__title,
-.cart-list__product__info__category,
-.cart-list__product__price__item,
-.cart-list__empty__title,
-.cart-list__product__quantity__item {
-    text-transform: uppercase;
-    font-weight: bold;
-}
-
-.cart-summary__item__shipping {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-end;
-    gap: 10px;
-}
-
-.cart-summary__item__shipping__select,
-.cart-summary__item__promo__input {
-    height: 30px;
-    padding: 0 0 0 20px;
-    border: 1px solid rgb(200, 200, 200);
-    align-self: stretch;
-}
-
-.cart-summary__item__promo {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-end;
-    gap: 10px;
-}
-
-.cart-summary__checkout {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    padding: 30px 0;
-}
-
-.cart-summary__checkout__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-}
-
-.cart-summary__checkout__btn {
-    background-color: #333;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-weight: bold;
-}
-</style>
+<style scoped></style>

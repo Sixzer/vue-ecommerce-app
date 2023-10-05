@@ -2,7 +2,7 @@
 import type { IProduct } from "@/assets/interfaces";
 import { useShopStore } from "@/stores/store";
 import { onMounted, ref } from "vue";
-import Spinner from "./UI/Spinner.vue";
+
 import Badge from "primevue/badge";
 
 const shopStore = useShopStore();
@@ -53,28 +53,9 @@ onMounted(() => {
                 >
                     Add to cart
                 </button>
-
-                <div class="card flex flex-wrap justify-content-center gap-4">
-                    <i
-                        v-badge="2"
-                        class="pi pi-bell p-overlay-badge"
-                        style="font-size: 2rem"
-                    />
-                    <i
-                        v-badge.danger="'5+'"
-                        class="pi pi-calendar p-overlay-badge"
-                        style="font-size: 2rem"
-                        ><Badge value="2"></Badge
-                    ></i>
-                    <i
-                        v-badge.danger
-                        class="pi pi-envelope p-overlay-badge"
-                        style="font-size: 2rem"
-                    />
-                </div>
             </article>
         </section>
-        <Spinner v-else />
+        <!-- <Spinner v-else /> -->
     </section>
 </template>
 

@@ -5,6 +5,7 @@ import ProductsItem from "@/components/UI/ProductsItem.vue";
 import { useShopStore } from "@/stores/store";
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
+import ProgressSpinner from "primevue/progressspinner";
 
 const shopStore = useShopStore();
 const productsList = computed<IProduct[]>(() => {
@@ -31,7 +32,9 @@ const productsList = computed<IProduct[]>(() => {
                 :key="product.id"
             />
         </section>
-        <Spinner v-else />
+        <section v-else class="card flex justify-content-center">
+            <ProgressSpinner />
+        </section>
     </article>
 
     <article class="text-center my-5">
