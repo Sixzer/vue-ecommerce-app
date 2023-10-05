@@ -40,12 +40,11 @@ const handleClick = () => {
             <article
                 class="flex justify-content-between align-items-center mt-2"
             >
-                <p
-                    class="product-info__price font-bold text-lg line-height-2 text-600"
-                >
+                <span class="font-bold text-lg line-height-2 text-600">
                     {{ product.price }} $
-                </p>
+                </span>
                 <Rating
+                    class="align-self-start"
                     v-model="product.rating.rate"
                     :cancel="false"
                     readonly
