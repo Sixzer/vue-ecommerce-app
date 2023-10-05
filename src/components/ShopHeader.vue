@@ -40,9 +40,10 @@ const totalItems = computed<number>(() => {
                 </li>
                 <li>
                     <RouterLink
-                        active-class="text-gray-600 font-bold"
-                        class="no-underline text-white transition-colors transition-duration-300 transition-linear hover:text-gray-600"
+                        active-class="text-gray-500 font-bold"
+                        class="no-underline transition-colors transition-duration-300 transition-linear hover:text-gray-500"
                         to="/about"
+                        style="color: white"
                     >
                         About
                     </RouterLink>
